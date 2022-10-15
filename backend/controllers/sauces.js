@@ -7,12 +7,15 @@ const { error } = require("console");
 // FONCTION GETALLSAUCE
 //----------------------------------------------------------------------------------
 
-/** accède à toutes les Sauces
-* {void}
-*/ 
+/** acceder à toutes les sauces
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 
 exports.getAllSauce = (req, res, next) => {
-  // on veut la liste complète de Sauce alors on utilise find() sans argument
+  // on veut la liste complète de toutes les Sauces alors on utilise find() sans argument
   Sauce.find()
     //  status 200 OK et sauces en json
     .then((sauces) => {
@@ -26,15 +29,17 @@ exports.getAllSauce = (req, res, next) => {
 //----------------------------------------------------------------------------------
 
 /** accèder à une sauce
-* {void}
-*/ 
-
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 exports.getOneSauce = (req, res, next) => {
   // on utilise le modele mangoose et findOne pour trouver un objet via la comparaison req.params.id
   Sauce.findOne({ _id: req.params.id })
     // status 200 OK et l'élément en json
     .then((sauce) => res.status(200).json(sauce))
-    // si erreur envoit un status 404 Not Found et l'erreur en json
+    // si erreur renvoi un status 404 Not Found et l'erreur en json
     .catch((error) => res.status(404).json({ error }));
 };
 //----------------------------------------------------------------------------------
@@ -42,11 +47,14 @@ exports.getOneSauce = (req, res, next) => {
 //----------------------------------------------------------------------------------
 
 /** créer une sauce
-* {void}
-*/ 
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 
 exports.createSauce = (req, res, next) => {
-  // on extrait le sauce de la requete via le parse
+  // on extrait la sauce de la requete via le parse
   
   const sauceObject = JSON.parse(req.body.sauce);
     delete sauceObject._id;
@@ -58,7 +66,7 @@ exports.createSauce = (req, res, next) => {
     });
   
     sauce.save()
-    .then(() => { res.status(201).json({message: 'Objet enregistré !'})})
+    .then(() => { res.status(201).json({message: 'sauce enregistrée !'})})
     .catch(error => { res.status(400).json( { error })})
  };
       
@@ -68,8 +76,11 @@ exports.createSauce = (req, res, next) => {
 //----------------------------------------------------------------------------------
 
 /** modifier une sauce
-* 
-*/ 
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 
 exports.modifySauce = (req, res, next) => {
   // l'id de la sauce est l'id inscrit dans l'url
@@ -82,10 +93,10 @@ exports.modifySauce = (req, res, next) => {
     Sauce.findOne({_id: req.params.id})
         .then((sauce) => {
             if (sauce.userId != req.auth.userId) {
-                res.status(401).json({ message : 'Not authorized'});
+                res.status(401).json({ message : 'Non autorisé'});
             } else {
                 sauce.updateOne({ _id: req.params.id}, { ...sauceObject, _id: req.params.id})
-                .then(() => res.status(200).json({message : 'Objet modifié!'}))
+                .then(() => res.status(200).json({message : 'sauce modifiée!'}))
                 .catch(error => res.status(401).json({ error }));
             }
         })
@@ -98,19 +109,22 @@ exports.modifySauce = (req, res, next) => {
 //----------------------------------------------------------------------------------
 
 /** effacer une sauce
-* 
-*/ 
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 
 exports.deletesauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id})
         .then(thing => {
             if (Sauce.userId != req.auth.userId) {
-                res.status(401).json({message: 'Not authorized'});
+                res.status(401).json({message: 'Non autorisé'});
             } else {
                 const filename = Sauce.imageUrl.split('/images/')[1];
                 fs.unlink(`images/${filename}`, () => {
                     Sauce.deleteOne({_id: req.params.id})
-                        .then(() => { res.status(200).json({message: 'Objet supprimé !'})})
+                        .then(() => { res.status(200).json({message: 'sauce supprimée !'})})
                         .catch(error => res.status(401).json({ error }));
                 });
             }
@@ -124,8 +138,11 @@ exports.deletesauce = (req, res, next) => {
 //----------------------------------------------------------------------------------
 
 /** liker une sauce
-* 
-*/ 
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */ 
 
 exports.likeSauce = (req, res, next) => {
    Sauce.findOne({ _id: req.params.id })
@@ -178,9 +195,9 @@ exports.likeSauce = (req, res, next) => {
         sauce.usersDisliked.push(votant);
         // pour tout autre vote, il ne vient pas de l'index/front donc probabilité de tentative de vote illégal
       } else {
-        console.log("tentavive de vote illégal");
+        console.log("tentative de vote illégal");
       }
-      // met à jour la sauce
+      // met à jour du fichier sauce
       Sauce.updateOne(
         { _id: req.params.id },
         {
@@ -199,6 +216,6 @@ exports.likeSauce = (req, res, next) => {
           }
         });
     })
-    // si erreur envoit un status 404 Not Found et l'erreur en json
+    // si erreur renvoi un status 404 Not Found et l'erreur en json
     .catch((error) => res.status(404).json({ error }));
 };

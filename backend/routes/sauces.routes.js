@@ -7,17 +7,17 @@ const router = express.Router();
 // ROUTES SAUCES
 //----------------------------------------------------------------------------------
 // intercepte les requetes get
-router.get("/", auth, saucesCtrl.getAllSauce);
+router.get("/sauces", auth, saucesCtrl.getAllSauce);
 // intercepte les requetes get
-router.get("/:id", auth, saucesCtrl.getOneSauce);
+router.get("/sauces/:id", auth, saucesCtrl.getOneSauce);
 // intercepte requete post de creation de sauce
-router.post("/", auth, multer, saucesCtrl.createSauce);
+router.post("/sauces", auth, multer, saucesCtrl.createSauce);
 // intercepte les requetes put (modification/mise à jour)
-router.put("/:id", auth, multer, saucesCtrl.modifySauce);
+router.put("/sauces/:id", auth, multer, saucesCtrl.modifySauce);
 // intercepte les requetes delete
-router.delete("/:id", auth, saucesCtrl.deleteSauce);
+router.delete("/sauces/:id", auth, saucesCtrl.deleteSauce);
 // intercepte requete post de like
-router.post("/:id/like", auth, saucesCtrl.likeSauce);
+router.post("/sauces/:id/like", auth, saucesCtrl.likeSauce);
 //----------------------------------------------------------------------------------
 // on exporte router
 module.exports = router;
