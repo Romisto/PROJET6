@@ -4,9 +4,12 @@ const Sauce = require("../models/Sauce_model");
 const fs = require("fs");
 const { error } = require("console");
 //----------------------------------------------------------------------------------
-// LOGIQUE GETALLSAUCE
+// FONCTION GETALLSAUCE
 //----------------------------------------------------------------------------------
-// accède à toutes les sauces
+
+/** accède à toutes les Sauces
+* {void}
+*/ 
 
 exports.getAllSauce = (req, res, next) => {
   // on veut la liste complète de Sauce alors on utilise find() sans argument
@@ -19,9 +22,12 @@ exports.getAllSauce = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 //----------------------------------------------------------------------------------
-// LOGIQUE GETONESAUCE
+// FONCTION GETONESAUCE
 //----------------------------------------------------------------------------------
-// accède à une sauce
+
+/** accèder à une sauce
+* {void}
+*/ 
 
 exports.getOneSauce = (req, res, next) => {
   // on utilise le modele mangoose et findOne pour trouver un objet via la comparaison req.params.id
@@ -32,9 +38,13 @@ exports.getOneSauce = (req, res, next) => {
     .catch((error) => res.status(404).json({ error }));
 };
 //----------------------------------------------------------------------------------
-// LOGIQUE CREATESAUCE
+// FONCTION CREATESAUCE
 //----------------------------------------------------------------------------------
-// créer une sauce
+
+/** créer une sauce
+* {void}
+*/ 
+
 exports.createSauce = (req, res, next) => {
   // on extrait le sauce de la requete via le parse
   
@@ -54,9 +64,13 @@ exports.createSauce = (req, res, next) => {
       
   
 //----------------------------------------------------------------------------------
-// LOGIQUE MODIFYSAUCE
+// FONCTION MODIFYSAUCE
 //----------------------------------------------------------------------------------
-// modifie une sauce
+
+/** modifier une sauce
+* 
+*/ 
+
 exports.modifySauce = (req, res, next) => {
   // l'id de la sauce est l'id inscrit dans l'url
         const sauceObject = req.file ? {
@@ -80,9 +94,13 @@ exports.modifySauce = (req, res, next) => {
         });
  };
 //----------------------------------------------------------------------------------
-// LOGIQUE DELETESAUCE
+// FONCTION DELETESAUCE
 //----------------------------------------------------------------------------------
-// efface une sauce
+
+/** effacer une sauce
+* 
+*/ 
+
 exports.deletesauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id})
         .then(thing => {
@@ -102,9 +120,13 @@ exports.deletesauce = (req, res, next) => {
         });
  };
 //----------------------------------------------------------------------------------
-// LOGIQUE LIKESAUCE
+// FONCTION LIKESAUCE
 //----------------------------------------------------------------------------------
-// like une sauce
+
+/** liker une sauce
+* 
+*/ 
+
 exports.likeSauce = (req, res, next) => {
    Sauce.findOne({ _id: req.params.id })
     //retourne une promesse avec reponse status 200 OK et l'élément en json

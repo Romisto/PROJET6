@@ -3,13 +3,13 @@ const User = require("../models/User_model");
 // appel du modele de mot de passe
 var passwordSchema = require("../models/Password_model");
 
-// LOGIQUE SIGNUP
+// FONCTION SIGNUP
 //----------------------------------------------------------------------------------
 // enregistrement de nouveaux utilisateurs grace a signup
 exports.signup = (req, res, next) => {
   // vérification dans la requete de l'email via validator
   const valideEmail = validator.isEmail(req.body.email);
-  // vérification du shéma mot de passe
+  // vérification du schéma mot de passe
   const validePassword = passwordSchema.validate(req.body.password);
   // si l'email et le mot de passe sont bon
   if (valideEmail === true && validePassword === true) {
@@ -27,11 +27,11 @@ exports.signup = (req, res, next) => {
         user
           .save()
           //status 201 Created et message en json
-          .then(() =>
+          .then(() => {
             res
               .status(201)
               .json({ message: "User created (FR)Utilisateur créé !" })
-          )
+            })
           // si erreur au hashage status 400 Bad Request et message en json
           .catch((error) => res.status(400).json({ error }));
       })
@@ -48,7 +48,7 @@ exports.signup = (req, res, next) => {
   }
 };
 //----------------------------------------------------------------------------------
-// LOGIQUE LOGIN
+// FONCTION LOGIN
 //----------------------------------------------------------------------------------
 // l'identification d'utilisateur grace a login
 exports.login = (req, res, next) => {
@@ -60,7 +60,6 @@ exports.login = (req, res, next) => {
       if (!user) {
         // status 401 Unauthorized et message en json
         return res.status(401).json({ error });
+        
     }
-             
-    
-};
+});
