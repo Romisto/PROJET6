@@ -1,5 +1,5 @@
 // on appelle le modèle de la sauce
-const Sauce = require("../models/Sauce_model");
+const Sauce = require("../models/model_sauces");
 // on appelle fs (filesystem) qui permet d'aller dans les fichiers
 const fs = require("fs");
 const { error } = require("console");

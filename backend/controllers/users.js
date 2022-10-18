@@ -2,7 +2,7 @@
 const User = require("../models/User_model");
 // appel du modele de mot de passe
 var passwordSchema = require("../models/Password_model");
-
+//---------------------------------------------------------------------------------
 // FONCTION SIGNUP
 //----------------------------------------------------------------------------------
 // enregistrement de nouveaux utilisateurs grace a signup

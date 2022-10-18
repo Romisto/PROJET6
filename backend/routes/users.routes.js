@@ -3,6 +3,9 @@ const express = require("express");
 // definition de express.Router
 const router = express.Router();
 
+//importation du middleware
+const auth = require('../middleware/auth');
+
 // on importe la logique des routes
 const userCtrl = require("../controllers/user");
 //----------------------------------------------------------------------------------

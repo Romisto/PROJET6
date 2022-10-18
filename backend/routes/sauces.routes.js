@@ -2,6 +2,9 @@
 const express = require("express");
 // on créer un routeur avec la méthode Router() d'express
 const router = express.Router();
+
+const auth = require('../middleware/auth');
+const saucesCtrl = require('../controllers/sauces');
 // on importe la logique des routes
 //----------------------------------------------------------------------------------
 // ROUTES SAUCES

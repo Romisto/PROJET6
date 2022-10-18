@@ -1,5 +1,7 @@
 const http = require('http');
 const app = require('./app');
+const sauceroute = require('./routes/sauces.routes');
+const usersroute = require('./routes/users.routes');
 
 const normalizePort = val => {
   const port = parseInt(val, 10);
@@ -14,6 +16,9 @@ const normalizePort = val => {
 };
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
+
+app.use('/api/sauce',sauceroute);
+app.use('/api/users',usersroute);
 
 const errorHandler = error => {
   if (error.syscall !== 'listen') {
