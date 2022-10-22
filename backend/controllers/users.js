@@ -1,7 +1,12 @@
+// appel de bcrypt
+const bcrypt = require("bcrypt");
+// appel du (jsonweb)token
+const jwt = require("jsonwebtoken");
+
 // appel de model user
 const User = require("../models/User_model");
 // appel du modele de mot de passe
-var passwordSchema = require("../models/Password_model");
+var passwordSchema = require("../models/model_pwd");
 //---------------------------------------------------------------------------------
 // FONCTION SIGNUP
 //----------------------------------------------------------------------------------

@@ -5,6 +5,9 @@ const router = express.Router();
 
 const auth = require('../middleware/auth');
 const saucesCtrl = require('../controllers/sauces');
+
+// on appelle multer pour ajout d'image
+const multer = require("../middleware/multer-config");
 // on importe la logique des routes
 //----------------------------------------------------------------------------------
 // ROUTES SAUCES

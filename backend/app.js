@@ -1,22 +1,37 @@
+// import express et mongodb
 const express = require('express');
-const app = express();
 const mongoose = require('mongoose');
-const model_sauces = require('./models/model_sauces');
-const model_users = require('./models/model_users');
-const sauces_controllers = require('./controllers/sauces');
+// declare constante app en attribuant le contenu express
+const app = express();
 
-mongoose.connect('mongodb+srv://<arogi>:<Romain1102>@cluster0.yhctsrg.mongodb.net/?retryWrites=true&w=majority',
+
+mongoose.connect('mongodb+srv://arogi:Romain1102@cluster0.yhctsrg.mongodb.net/?retryWrites=true&w=majority',
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
-  app.use ('/sauces', sauces_controllers.getAllSauce);
 
-app.set('port', process.env.PORT || 3000);
-app.listen(process.env.PORT || 3000,()=>{
-  console.log('connecté au serveur');
+//Ajout des middlewares
+// enregistre
+app.use((req, res, next) => {
+    console.log("Requête reçue !");
+    next();
+    });
+ // ajoute un code d'état  à la réponse et passe l&#39;exécution ;
+app.use((req, res, next) => {
+    res.status(201);
+    next();
 });
-//const server = http.createServer(app);
+  //envoie la réponse JSON et passe l'exécution ;      
+app.use((req, res, next) => {
+    res.json({ message: "Votre requête a bien été reçue !" });
+    next();
+});
 
-//server.listen(process.env.PORT || 3000);
+// reponse envoyé avec succes
+app.use((req, res, next) => {
+    console.log("Réponse envoyée avec succès !");
+    });
+
+module.exports = app;

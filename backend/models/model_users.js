@@ -10,4 +10,4 @@ password: { type: String, required: true },
 
 });
 // exportation du schema modele
-module.exports = mongoose.model('users', usersSchema);
+module.exports = mongoose.model('model_users', usersSchema);

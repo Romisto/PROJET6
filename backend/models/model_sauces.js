@@ -1,5 +1,6 @@
+// appel de mongoose
 const mongoose = require('mongoose');
-
+// création d'un schéma de données qui contient les champs souhaités pour chaque Sauce
 const sauceSchema = mongoose.Schema({
   userId: { type: String, required: true },
   name: { type: String, required: true },
@@ -14,5 +15,5 @@ const sauceSchema = mongoose.Schema({
   usersDisliked: { type: [String], required: false },
   
 });
-
-module.exports = mongoose.model('Sauce', sauceSchema);
+// nous exportons ce schéma en tant que modèle Mongoose appelé « Sauce »
+module.exports = mongoose.model('model_sauce', sauceSchema);
