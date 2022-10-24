@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 // appel de model user
-const User = require("../models/User_model");
+const User = require("../models/model_users");
 // appel du modele de mot de passe
 var passwordSchema = require("../models/model_pwd");
 //---------------------------------------------------------------------------------
