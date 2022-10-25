@@ -1,5 +1,7 @@
 // appel de mangoose
 const mongoose = require('mongoose');
+// appel de mongoose-unique-validator après installation
+const uniqueValidator = require("mongoose-unique-validator");
 
 // création de schéma de connection d'utilisateur
 const usersSchema = mongoose.Schema({

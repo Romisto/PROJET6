@@ -1,11 +1,16 @@
-// import express et mongodb
+// import d'express
 const express = require('express');
+// appel de helmet, il est utilisé pour sécuriser vos en-têtes http. https://blog.risingstack.com/node-js-security-checklist/ https://expressjs.com/fr/advanced/best-practice-security.html
+const helmet = require('helmet');
 const mongoose = require('mongoose');
+// on importe des routes de sauces
 const routesauce = require('./routes/sauces.routes');
+// on importe des routes d'utilisateurs
 const routeusers = require('./routes/users.routes');
 // declare constante app en attribuant le contenu express
 const app = express();
-
+// middleware d'helmet
+app.use(helmet());
 
 
 mongoose.connect('mongodb+srv://arogi:Romain1102@cluster0.yhctsrg.mongodb.net/?retryWrites=true&w=majority',
@@ -14,31 +19,38 @@ mongoose.connect('mongodb+srv://arogi:Romain1102@cluster0.yhctsrg.mongodb.net/?r
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
   
-  app.use('/api/users',routeusers);
-  app.use('/api/sauces',routesauce);
+  
   
 
+// definit le CORS
 
-//Ajout des middlewares
-// enregistre
 app.use((req, res, next) => {
-    console.log("Requête reçue !");
-    next();
-    });
- // ajoute un code d'état  à la réponse et passe l'exécution ;
-app.use((req, res, next) => {
-    res.status(201);
-    next();
+  // origine, droit d'accéder c'est tout le monde '*'
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  // headers, ce sont les headers acceptés (en-tête)
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
+  );
+  // methods,  ce sont les méthodes acceptés (verbe de requete)
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, OPTIONS, PATCH"
+  );
+  next();
 });
-  //envoie la réponse JSON et passe l'exécution ;      
-app.use((req, res, next) => {
-    res.json({ message: "Votre requête a bien été reçue !" });
-    next();
-});
 
-// reponse envoyé avec succes
-app.use((req, res, next) => {
-    console.log("Réponse envoyée avec succès !");
-    });
+// middleware intercepte la requete et la transforme au bon format
+app.use(express.json());
+//----------------------------------------------------------------------------------
+// MIDDLEWARE DEBUT DE ROUTE
+//----------------------------------------------------------------------------------
+// pour cette route utiliser le fichier statique
+//app.use("/images", express.static(path.join(__dirname, "images")));
+// pour cette route on utilise le router de l'utilisateur
+app.use("/api/auth", routeusers);
+// pour cette route la on utilise le router de saucesRoutes
+app.use("/api/sauces", routesauce);
 
+// on exporte cette constante pour pouvoir y acceder depuis d'autres fichiers
 module.exports = app;

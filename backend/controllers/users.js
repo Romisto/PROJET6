@@ -7,6 +7,8 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/model_users");
 // appel du modele de mot de passe
 var passwordSchema = require("../models/model_pwd");
+// appel de la fonction isEmail de validator que l'on installe npm install validator pour gérer la validation de l'email (comme une regex)
+const validator = require("validator");
 //---------------------------------------------------------------------------------
 // FONCTION SIGNUP
 //----------------------------------------------------------------------------------
@@ -85,7 +87,7 @@ exports.login = (req, res, next) => {
             token: jwt.sign(
               // le token aura le user id identique à la requete d'authentification
               { userId: user._id },
-              // clef secrette pour l'encodage
+              // clef secrete pour l'encodage
               process.env.TOKEN_SECRET_ALEATOIRE,
               // durée de vie du token
               { expiresIn: process.env.TOKEN_TEMP }
