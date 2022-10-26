@@ -1,8 +1,8 @@
 // import d'express
 const express = require('express');
-// appel de helmet, il est utilisé pour sécuriser vos en-têtes http. https://blog.risingstack.com/node-js-security-checklist/ https://expressjs.com/fr/advanced/best-practice-security.html
+// appel de helmet, il est utilisé pour sécuriser vos en-têtes 
 const helmet = require('helmet');
-const mongoose = require('mongoose');
+
 // on importe des routes de sauces
 const routesauce = require('./routes/sauces.routes');
 // on importe des routes d'utilisateurs
@@ -12,6 +12,8 @@ const app = express();
 // middleware d'helmet
 app.use(helmet());
 
+//appel de mongoose
+const mongoose = require('mongoose');
 
 mongoose.connect('mongodb+srv://arogi:Romain1102@cluster0.yhctsrg.mongodb.net/?retryWrites=true&w=majority',
   { useNewUrlParser: true,
@@ -42,11 +44,13 @@ app.use((req, res, next) => {
 
 // middleware intercepte la requete et la transforme au bon format
 app.use(express.json());
+
 //----------------------------------------------------------------------------------
 // MIDDLEWARE DEBUT DE ROUTE
 //----------------------------------------------------------------------------------
 // pour cette route utiliser le fichier statique
 //app.use("/images", express.static(path.join(__dirname, "images")));
+
 // pour cette route on utilise le router de l'utilisateur
 app.use("/api/auth", routeusers);
 // pour cette route la on utilise le router de saucesRoutes

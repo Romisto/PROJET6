@@ -5,12 +5,12 @@ const app = require('./app');
 
 // GARDE CORP SECURITE
 //----------------------------------------------------------------------------------
-//   Cette fonction est un garde-corps de sécurité pour s’assurer que le port fourni est number sinon un nombre alors un string et si quoi que ce soit d’autre, définissez-le sur false
+
 //	 la fonction normalizePort renvoie un port valide, qu'il soit fourni sous la forme d'un numéro ou d'une chaîne
 const normalizePort = (val) => {
     //Exécute parseInt, qui convertit essentiellement la valeur en un entier, si possible.
     const port = parseInt(val, 10);
-    // si port n'est pas un nombre   isNaN(port)
+    // si port n'est pas un nombre isNaN(port)
     if (isNaN(port)) {
       // retourne val
       return val;
@@ -23,15 +23,15 @@ const normalizePort = (val) => {
     // sinon retourne faux
     return false;
   };
-  // constante port qui définit le port
-  // const port = normalizePort(process.env.PORT || '3000');
+  // constante port qui définit le port 3000
+  
   const port = normalizePort(process.env.PORT || "3000");
   // dit à l'application express quelle doit tourner sur le 'port' avec la constante port
   app.set("port", port);
 
 // DIPLOMATIE DES ERREURS
 //----------------------------------------------------------------------------------
-// la fonction errorHandler  recherche les différentes erreurs et les gère de manière appropriée. Elle est ensuite enregistrée dans le serveur ;
+// recherche les différentes erreurs et les gère de manière appropriée ensuite enregistrée dans le serveur ;
 const errorHandler = (error) => {
   // si le server n'entend rien à l'appel
   if (error.syscall !== "listen") {

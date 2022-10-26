@@ -13,17 +13,17 @@ const multer = require("../middleware/multer-config");
 // ROUTES SAUCES
 //----------------------------------------------------------------------------------
 // intercepte les requetes get
-router.get("/sauces", auth, saucesCtrl.getAllSauce);
+router.get("/", auth, saucesCtrl.getAllSauce);
 // intercepte les requetes get
-router.get("/sauces/:id", auth, saucesCtrl.getOneSauce);
+router.get("/:id", auth, saucesCtrl.getOneSauce);
 // intercepte requete post de creation de sauce
-router.post("/sauces", auth, multer, saucesCtrl.createSauce);
+router.post("/", auth, multer, saucesCtrl.createSauce);
 // intercepte les requetes put (modification/mise à jour)
-router.put("/sauces/:id", auth, multer, saucesCtrl.modifySauce);
+router.put("/:id", auth, multer, saucesCtrl.modifySauce);
 // intercepte les requetes delete
-router.delete("/sauces/:id", auth, multer, saucesCtrl.deletesauce);
+router.delete("/:id", auth, multer, saucesCtrl.deletesauce);
 // intercepte requete post de like
-router.post("/sauces/:id/like", auth, multer, saucesCtrl.likeSauce);
+router.post("/:id/like", auth, multer, saucesCtrl.likeSauce);
 //----------------------------------------------------------------------------------
 // on exporte router
 module.exports = router;
