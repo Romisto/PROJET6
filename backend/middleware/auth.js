@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
     const userId = decodedToken.userId;
     // on rajoute l'objet userId à l'objet requete
     req.auth = { userId };
-    // si il y a un userId et que les id sont différants entre requete et token
+    // s'il y a un userId et que les id sont différants entre requete et token
     if (req.body.userId && (req.body.userId !== userId)) {
       // renvoi un message
       throw error;
@@ -21,7 +21,7 @@ module.exports = (req, res, next) => {
       // passe au suivant
       next();
     }
-    // si il y a une erreur
+    // s'il y a une erreur
   } catch (error) {
     // reponse status 401 Unauthorized avec un message en json
     res.status(401).json({ error });

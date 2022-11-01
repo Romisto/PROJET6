@@ -13,7 +13,7 @@ const MIME_TYPES = {
   "image/tif": "tif",
   "image/webp": "webp",
 };
-// multer.diskStorage on va enregistrer sur le disque
+// multer.diskStorage va enregistrer sur le disque
 const storage = multer.diskStorage({
   // on choisit la destination  
   destination: (req, file, callback) => {
@@ -21,9 +21,9 @@ const storage = multer.diskStorage({
   },
   // on definit les termes de son appel (nom)
   filename: (req, file, callback) => {
-    // nom d'origine du fichier que l'ont transforme si il y a des espaces, on crée un tableau et on join ses éléments par _
+    // nom d'origine du fichier que l'ont transforme s'il y a des espaces, on crée un tableau et on join ses éléments par _
     const name = file.originalname.split(" ").join("_");
-    // permet de créer une extension de fichiers correspondant au mimetype (via dictionnaire) envoyé par le frontend
+    // création d'une extension de fichiers correspondant au mimetype (via dictionnaire) envoyé par le frontend
     const extension = MIME_TYPES[file.mimetype];
     // si le fichier correspond à un fichier image https://developer.mozilla.org/fr/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
     if (
@@ -38,7 +38,7 @@ const storage = multer.diskStorage({
       file.mimetype === "image/tif" ||
       file.mimetype === "image/webp"
     ) {
-      // aura son nom associé à une date (pour le rendre le plus unique possible) et un point et son extension
+      // association de son nom à une date (pour le rendre le plus unique possible), un point et son extension
       callback(null, name + Date.now() + "." + extension);
       // si ce n'est pas un fichier image
     } else {
@@ -52,5 +52,5 @@ const storage = multer.diskStorage({
   },
 });
 // on exporte le fichier via multer qui possede l'objet storage puis .single signifie fichier unique (pas un groupe de fichiers) en disant que c'est un fichier 'image'
-// ce nom de fichier sera la key dans form-data de postman (insert File)
+// ce nom de fichier sera la clé dans form-data de postman (insert File)
 module.exports = multer({ storage }).single("image");

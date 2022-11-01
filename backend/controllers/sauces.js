@@ -288,7 +288,7 @@ exports.deletesauce = (req, res, next) => {
       //variable du nom de l'image de la sauce trouvée
       const nomImage = sauce.imageUrl;
       // variable de l'image sauce par défaut
-      const imDefaut = "http://localhost:3000/images/defaut/imagedefaut.png";
+      const imDefaut = "http://localhost:3000/images/imagedefaut.png";
       // l'id du créateur de la sauce doit etre le meme que celui identifié par le token sinon
       if (sauce.userId !== req.auth.userId) {
         // reponse en status 403 Forbidden avec message json

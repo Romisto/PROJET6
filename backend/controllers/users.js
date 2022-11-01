@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/model_users");
 // appel du modele de mot de passe
 var passwordSchema = require("../models/model_pwd");
-// appel de la fonction isEmail de validator que l'on installe npm install validator pour gérer la validation de l'email (comme une regex)
+// appel de la fonction isEmail de validator pour gérer la validation de l'email (comme une regex)
 const validator = require("validator");
 //---------------------------------------------------------------------------------
 // FONCTION SIGNUP
@@ -20,12 +20,12 @@ exports.signup = (req, res, next) => {
   const validePassword = passwordSchema.validate(req.body.password);
   // si l'email et le mot de passe sont bon
   if (valideEmail === true && validePassword === true) {
-    // fonction pour hasher/crypter le mot de passe en 10 tours pour le sel
+    // fonction pour hasher/crypter le mot de passe en 10 tours pour saler
     bcrypt
       .hash(req.body.password, 10)
       // quand c'est hashé
       .then((hash) => {
-        // créer un modele User avec email et mot de pase hashé
+        // créer un modele User avec email et mot de passe hashé
         const user = new User({
           email: req.body.email,
           password: hash,
@@ -97,6 +97,5 @@ exports.login = (req, res, next) => {
         // erreur status 500 Internal Server Error et message en json
         .catch((error) => res.status(500).json({ error }));
     })
-    // erreur status 500 Internal Server Error et message en json
-    .catch((error) => res.status(500).json({ error }));
+    
 };

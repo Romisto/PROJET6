@@ -2,6 +2,8 @@
 const express = require('express');
 // appel de helmet, il est utilisé pour sécuriser vos en-têtes 
 const helmet = require('helmet');
+// appel de dotenv qui stocke des variables d'environnement et ça servira pour l'appel mongodb en dessous.
+require("dotenv").config({ path: "./env" });
 
 // on importe des routes de sauces
 const routesauce = require('./routes/sauces.routes');
@@ -9,6 +11,8 @@ const routesauce = require('./routes/sauces.routes');
 const routeusers = require('./routes/users.routes');
 // declare constante app en attribuant le contenu express
 const app = express();
+// on importe path, donne accés au chemin du système de fichiers
+const path = require("path");
 // middleware d'helmet
 app.use(helmet());
 
@@ -49,7 +53,7 @@ app.use(express.json());
 // MIDDLEWARE DEBUT DE ROUTE
 //----------------------------------------------------------------------------------
 // pour cette route utiliser le fichier statique
-//app.use("/images", express.static(path.join(__dirname, "images")));
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 // pour cette route on utilise le router de l'utilisateur
 app.use("/api/auth", routeusers);
