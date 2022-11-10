@@ -2,8 +2,8 @@
 const express = require('express');
 // appel de helmet, il est utilisé pour sécuriser vos en-têtes 
 const helmet = require('helmet');
-// appel de dotenv qui stocke des variables d'environnement et ça servira pour l'appel mongodb en dessous.
-require("dotenv").config({ path: "./env" });
+// appel de dotenv qui stocke des variables d'environnement 
+require("dotenv").config();
 
 // on importe des routes de sauces
 const routesauce = require('./routes/sauces.routes');
@@ -15,6 +15,8 @@ const app = express();
 const path = require("path");
 // middleware d'helmet
 app.use(helmet());
+
+app.use(express.json());
 
 //appel de mongoose
 const mongoose = require('mongoose');
@@ -31,14 +33,15 @@ mongoose.connect('mongodb+srv://arogi:Romain1102@cluster0.yhctsrg.mongodb.net/?r
 // definit le CORS
 
 app.use((req, res, next) => {
-  // origine, droit d'accéder c'est tout le monde '*'
+  // ceux qui ont droit d'accéder à l'API 
   res.setHeader("Access-Control-Allow-Origin", "*");
-  // headers, ce sont les headers acceptés (en-tête)
+  res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
+  // les headers acceptés (en-tête)
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
   );
-  // methods,  ce sont les méthodes acceptés (verbe de requete)
+  // les méthodes acceptés (verbe de requete)
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, PUT, DELETE, OPTIONS, PATCH"
@@ -47,7 +50,11 @@ app.use((req, res, next) => {
 });
 
 // middleware intercepte la requete et la transforme au bon format
-app.use(express.json());
+// on peut écrire ceci aussi en faisant appel à body-parser      
+/*const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));*/ 
+
 
 //----------------------------------------------------------------------------------
 // MIDDLEWARE DEBUT DE ROUTE
@@ -55,10 +62,11 @@ app.use(express.json());
 // pour cette route utiliser le fichier statique
 app.use("/images", express.static(path.join(__dirname, "images")));
 
-// pour cette route on utilise le router de l'utilisateur
-app.use("/api/auth", routeusers);
+
 // pour cette route la on utilise le router de saucesRoutes
 app.use("/api/sauces", routesauce);
+// pour cette route on utilise le router de l'utilisateur
+app.use("/api/auth", routeusers);
 
 // on exporte cette constante pour pouvoir y acceder depuis d'autres fichiers
 module.exports = app;

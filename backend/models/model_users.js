@@ -14,4 +14,4 @@ password: { type: String, required: true },
 // utilisation du schema via le plugin de mongoose-unique-validator
 usersSchema.plugin(uniqueValidator);
 // exportation du schema modele
-module.exports = mongoose.model('User', usersSchema);
+module.exports = mongoose.model('model_users', usersSchema);

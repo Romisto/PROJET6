@@ -7,15 +7,15 @@ module.exports = (req, res, next) => {
     // on utilise le header authorization de la requete (CORS) on split le tableau et on récupère l'élément à l'indice 1 (Bearer Token)
     const token = req.headers.authorization.split(" ")[1];
     // décoder le token en vérifiant qu'il correspond avec sa clef secrète
-    const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET_ALEATOIRE);
+    const decodedToken = jwt.verify(token, RANDOM_TOKEN_SECRET);
     // on récupère le user id décodé par le jwt.vérify
     const userId = decodedToken.userId;
     // on rajoute l'objet userId à l'objet requete
-    req.auth = { userId };
+    req.auth = { userId:userId };
     // s'il y a un userId et que les id sont différants entre requete et token
     if (req.body.userId && (req.body.userId !== userId)) {
       // renvoi un message
-      throw error;
+      res.status(403).json({ message: 'Requête non autorisée' });
       // sinon c'est que c'est bon
     } else {
       // passe au suivant

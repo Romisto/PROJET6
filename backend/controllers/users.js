@@ -39,8 +39,10 @@ exports.signup = (req, res, next) => {
               .status(201)
               .json({ message: "User created (FR)Utilisateur créé !" })
             })
-          // si erreur au hashage status 400 Bad Request et message en json
-          .catch((error) => res.status(400).json({ error }));
+          // si erreur au hashage status 500 Bad Request et message en json
+          .catch((error) => {
+            res.status(500).json({ error })
+          });
       })
       // au cas d'une erreur status 500 Internal Server Error et message en json
       .catch((error) => res.status(500).json({ error }));
@@ -88,9 +90,9 @@ exports.login = (req, res, next) => {
               // le token aura le user id identique à la requete d'authentification
               { userId: user._id },
               // clef secrete pour l'encodage
-              process.env.TOKEN_SECRET_ALEATOIRE,
+              'RANDON_TOKEN_SECRET',
               // durée de vie du token
-              { expiresIn: process.env.TOKEN_TEMP }
+              { expiresIn: '24h'}
             ),
           });
         })

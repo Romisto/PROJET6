@@ -18,11 +18,11 @@ exports.getAllSauce = (req, res, next) => {
   // on veut la liste complète de toutes les Sauces alors on utilise find() sans argument
   Sauce.find()
     //  status 200 OK et sauces en json
-    .then((sauces) => {
+    .then(sauces => {
       res.status(200).json(sauces);
     })
     // erreur un status 400 Bad Request et l'erreur en json
-    .catch((error) => res.status(400).json({ error }));
+    .catch(error => res.status(400).json({ error }));
 };
 //----------------------------------------------------------------------------------
 // FONCTION GETONESAUCE
@@ -65,7 +65,7 @@ exports.createSauce = (req, res, next) => {
     usersDisliked: [],
   };
   //l'user id de la requete doit etre le meme que l'id associé au token (si sur postman une personne rentre dans la data un autre id que celui du token)
-  // si la sécurité du token et de l'user id est compromit, revoir authentification via captcha ou autre système plus accessible car risque de keylogger
+  // si la sécurité du token et de l'user id sont compromit, revoir authentification via captcha ou autre système plus accessible car risque de keylogger
   // il faut adapter la sécurité au type de donnée potentiellement recueillie malhonnetement par un tier ou donnée délivrée nuisible par usurpation via ce tier
   if (sauceObject.userId !== req.auth.userId) {
     // reponse en status 403 Forbidden avec message json
@@ -110,7 +110,7 @@ exports.createSauce = (req, res, next) => {
     // l'image url correspont au protocole avec :// puis la valeur du port (host) dans le dossier images qui a le nom
     imageUrl: `${req.protocol}://${req.get(
       "host"
-    )}/images/defaut/imagedefaut.png`,
+    )}/images/imagedefaut.png`,
     ...initialisation,
   });
   // si problème avec valeur heat (postman) initialisation de sa valeur
@@ -189,7 +189,7 @@ exports.modifySauce = (req, res, next) => {
           // on détermine le nom de l'ancien fichier image
           const filename = sauce.imageUrl.split("/images/")[1];
           // si ceci correspond à une partie du nom de l'image par defaut
-          const testImage = 'defaut/imagedefaut.png';
+          const testImage = 'imagedefaut.png';
           // si le nom de l'image ne correspont pas à l'image defaut
           if(testImage != filename){
           // on efface le fichier image qui doit se faire remplacer
@@ -211,7 +211,7 @@ exports.modifySauce = (req, res, next) => {
           // on détermine le nom de l'ancien fichier image
           const filename = sauce.imageUrl.split("/images/")[1];
           // si ceci correspond à une partie du nom de l'image par defaut
-          const testImage = 'defaut/imagedefaut.png';
+          const testImage = 'imagedefaut.png';
           // si le nom de l'image ne correspont pas à l'image defaut
           if(testImage != filename){
           // on efface le fichier image qui doit se faire remplacer
@@ -224,7 +224,7 @@ exports.modifySauce = (req, res, next) => {
             // l'image sera l'image par defaut
             imageUrl: `${req.protocol}://${req.get(
               "host"
-            )}/images/defaut/imagedefaut.png`,
+            )}/images/imagedefaut.png`,
             ...immuable,
           };
           sauceBot = sauceObject;
