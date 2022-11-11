@@ -3,11 +3,11 @@ const jwt = require("jsonwebtoken");
 // on exporte la requete
 module.exports = (req, res, next) => {
   // essaye
-  try {
+  try {console.log(req.headers.authorization)
     // on utilise le header authorization de la requete (CORS) on split le tableau et on récupère l'élément à l'indice 1 (Bearer Token)
     const token = req.headers.authorization.split(" ")[1];
     // décoder le token en vérifiant qu'il correspond avec sa clef secrète
-    const decodedToken = jwt.verify(token, RANDOM_TOKEN_SECRET);
+    const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
     // on récupère le user id décodé par le jwt.vérify
     const userId = decodedToken.userId;
     // on rajoute l'objet userId à l'objet requete

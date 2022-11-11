@@ -90,14 +90,15 @@ exports.login = (req, res, next) => {
               // le token aura le user id identique à la requete d'authentification
               { userId: user._id },
               // clef secrete pour l'encodage
-              'RANDON_TOKEN_SECRET',
+              "RANDOM_TOKEN_SECRET",
               // durée de vie du token
               { expiresIn: '24h'}
             ),
           });
         })
-        // erreur status 500 Internal Server Error et message en json
-        .catch((error) => res.status(500).json({ error }));
-    })
-    
-};
+       // erreur status 500 Internal Server Error et message en json
+       .catch((error) => res.status(500).json({ error }));
+      })
+      // erreur status 500 Internal Server Error et message en json
+      .catch((error) => res.status(500).json({ error }));
+  };
