@@ -3,7 +3,9 @@ const express = require("express");
 // on créer un routeur avec la méthode Router() d'express
 const router = express.Router();
 
+//appel de notre middleware pour le passer comme argument aux routes à proteger
 const auth = require('../middleware/auth');
+
 const saucesCtrl = require('../controllers/sauces');
 
 // on appelle multer pour ajout d'image

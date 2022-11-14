@@ -48,9 +48,10 @@ exports.signup = (req, res, next) => {
       .catch((error) => res.status(500).json({ error }));
     // si le mot de passe ou l'email ou les 2 ne sont pas bon
   } else {
-    console.log("Email ou mot de passe non conforme au standart ");
+    res.message("Email ou mot de passe non conforme au standart ");
+    
     // information au cas le mot de passe serait invalide
-    console.log(
+    res.message(
       "(not = caratère invalide) manquant au mot de passe: " +
         passwordSchema.validate(req.body.password, { list: true })
     );
