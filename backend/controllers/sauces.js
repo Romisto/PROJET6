@@ -295,11 +295,11 @@ exports.deletesauce = (req, res, next) => {
         return res.status(403).json("unauthorized request");
         // et si nom de l'image sauce est différante de celle par defaut
       } else if (nomImage != imDefaut) {
-        // on créait un tableau via l'url et en séparant la partie '/images' et ensuite on recupère l'indice 1 du tableau qui est le nom du fichier
+        // on créé un tableau via l'url et en séparant la partie '/images' et ensuite on recupère l'indice 1 du tableau qui est le nom du fichier
         const filename = sauce.imageUrl.split("/images/")[1];
         // unlink va supprimer le fichier image de la sauce concernée dans le dossier image
         fs.unlink(`images/${filename}`, () => {
-          // effacera un sauce et son _id sera la comparaison avec l'id des paramètres de la requete (paramètre de route)
+          // effacera une sauce et son _id sera la comparaison avec l'id des paramètres de la requete (paramètre de route)
           Sauce.deleteOne({ _id: req.params.id })
             // retourne une promesse status 200 OK et message en json
             .then(() =>
@@ -350,7 +350,7 @@ exports.likeSauce = (req, res, next) => {
       // determine si l'utilisateur est dans un tableau
       let bon = like.includes(votant);
       let mauvais = unlike.includes(votant);
-      // ce comparateur va attribuer une valeur de point en fonction du tableau dans lequel il est
+      // ce comparateur va attribuer une valeur de point en fonction du tableau dans lequel il se trouve
       if (bon === true) {
         valeurVote = 1;
       } else if (mauvais === true) {
