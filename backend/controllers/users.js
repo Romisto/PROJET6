@@ -41,11 +41,11 @@ exports.signup = (req, res, next) => {
             })
           // si erreur au hashage status 500 Bad Request et message en json
           .catch((error) => {
-            res.status(500).json({ error })
+            res.status(500).json({message: "email déjà utlisé"})
           });
       })
       // au cas d'une erreur status 500 Internal Server Error et message en json
-      .catch((error) => res.status(500).json({ error }));
+      .catch((error) => res.status(500).json({ message: "email déjà utlisé" }));
     // si le mot de passe ou l'email ou les 2 ne sont pas bon
   } else {
     res.message("Email ou mot de passe non conforme au standart ");
@@ -80,7 +80,7 @@ exports.login = (req, res, next) => {
           // si ce n'est pas valide
           if (!valid) {
             // retourne un status 401 Unauthorized et un message en json
-            return res.status(401).json({ error });
+            return res.status(401).json({ message: "connection non autorisée" });
           }
           // si c'est ok status 201 Created et renvoi un objet json
           res.status(201).json({
@@ -91,15 +91,15 @@ exports.login = (req, res, next) => {
               // le token aura le user id identique à la requete d'authentification
               { userId: user._id },
               // clef secrete pour l'encodage
-              "RANDOM_TOKEN_SECRET",
+              process.env.TOKEN_SECRET_ALEATOIRE,
               // durée de vie du token
-              { expiresIn: '24h'}
+              { expiresIn: process.env.TOKEN_TEMP }
             ),
           });
         })
        // erreur status 500 Internal Server Error et message en json
-       .catch((error) => res.status(500).json({ error }));
+       .catch((error) => res.status(500).json({ message: "email déjà utlisé" }));
       })
       // erreur status 500 Internal Server Error et message en json
-      .catch((error) => res.status(500).json({ error }));
+      .catch((error) => res.status(500).json({ message: "email déjà utlisé" }));
   };

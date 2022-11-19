@@ -189,7 +189,7 @@ exports.modifySauce = (req, res, next) => {
           // on détermine le nom de l'ancien fichier image
           const filename = sauce.imageUrl.split("/images/")[1];
           // si ceci correspond à une partie du nom de l'image par defaut
-          const testImage = 'imagedefaut.png';
+          const testImage = '/imagedefaut.png';
           // si le nom de l'image ne correspont pas à l'image defaut
           if(testImage != filename){
           // on efface le fichier image qui doit se faire remplacer
