@@ -1,5 +1,8 @@
 // appel du (jsonweb)token
 const jwt = require("jsonwebtoken");
+//appel du dotenv
+const dotenv = require('dotenv')
+dotenv.config()
 // on exporte la requete
 module.exports = (req, res, next) => {
   // essaye
@@ -15,7 +18,7 @@ module.exports = (req, res, next) => {
     // s'il y a un userId et que les id sont différants entre requete et token
     if (req.body.userId && (req.body.userId !== userId)) {
       // renvoi un message
-      res.status(403).json({ message: 'Requête non autorisée' });
+      res.status(403).json({ message: "L'identifiant de l'utilisateur est invalide" });
       // sinon c'est que c'est bon
     } else {
       // passe au suivant

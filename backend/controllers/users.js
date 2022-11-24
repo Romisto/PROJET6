@@ -20,7 +20,7 @@ exports.signup = (req, res, next) => {
   const validePassword = passwordSchema.validate(req.body.password);
   // si l'email et le mot de passe sont bon
   if (valideEmail === true && validePassword === true) {
-    // fonction pour hasher/crypter le mot de passe en 10 tours pour saler
+    // utilisation de fonction bcrypt pour hasher/crypter le mot de passe en 10 tours pour saler
     bcrypt
       .hash(req.body.password, 10)
       // quand c'est hashé
