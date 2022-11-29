@@ -342,12 +342,12 @@ exports.likeSauce = (req, res) => {
       const like = sauce.usersLiked;
       const unlike = sauce.usersDisliked;
       // determine si l'utilisateur est dans un tableau
-      let bon = like.includes(votant);
-      let mauvais = unlike.includes(votant);
+      const vote = like.includes(votant);
+      const nonvote = unlike.includes(votant);
       // ce comparateur va attribuer une valeur de point en fonction du tableau dans lequel il se trouve
-      if (bon === true) {
+      if (vote === true) {
         valeurVote = 1;
-      } else if (mauvais === true) {
+      } else if (nonvote === true) {
         valeurVote = -1;
       } else {
         valeurVote = 0;
