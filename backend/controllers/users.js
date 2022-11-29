@@ -13,7 +13,7 @@ const validator = require("validator");
 // FONCTION SIGNUP
 //----------------------------------------------------------------------------------
 // enregistrement de nouveaux utilisateurs grace a signup
-exports.signup = (req, res, next) => {
+exports.signup = (req, res) => {
   // vérification dans la requete de l'email via validator
   const valideEmail = validator.isEmail(req.body.email);
   // vérification du schéma mot de passe
@@ -48,20 +48,16 @@ exports.signup = (req, res, next) => {
       .catch((error) => res.status(500).json({ message: "email déjà utlisé" }));
     // si le mot de passe ou l'email ou les 2 ne sont pas bon
   } else {
-    res.message("Email ou mot de passe non conforme au standart ");
+    res.status(500).json({message: "mot de passe erroné"});
     
-    // information au cas le mot de passe serait invalide
-    res.message(
-      "(not = caratère invalide) manquant au mot de passe: " +
-        passwordSchema.validate(req.body.password, { list: true })
-    );
-  }
+   
+      }
 };
 //----------------------------------------------------------------------------------
 // FONCTION LOGIN
 //----------------------------------------------------------------------------------
 // l'identification d'utilisateur grace a login
-exports.login = (req, res, next) => {
+exports.login = (req, res) => {
   // on trouve l'adresse qui est rentrée par un utilisateur (requete)
   User.findOne({ email: req.body.email })
     // pour un utilisateur

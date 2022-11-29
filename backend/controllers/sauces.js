@@ -11,10 +11,9 @@ const { error } = require("console");
  * 
  * @param {*} req 
  * @param {*} res 
- * @param {*} next 
  */
 
-exports.getAllSauce = (req, res, next) => {
+exports.getAllSauce = (req, res) => {
   // on veut la liste complète de toutes les Sauces alors on utilise find() sans argument
   Sauce.find()
     //  status 200 OK et sauces en json
@@ -32,9 +31,8 @@ exports.getAllSauce = (req, res, next) => {
  * 
  * @param {*} req 
  * @param {*} res 
- * @param {*} next 
  */
-exports.getOneSauce = (req, res, next) => {
+exports.getOneSauce = (req, res) => {
   // on utilise le modele mangoose et findOne pour trouver un objet via la comparaison req.params.id
   Sauce.findOne({ _id: req.params.id })
     // status 200 OK et l'élément en json
@@ -50,10 +48,9 @@ exports.getOneSauce = (req, res, next) => {
  * 
  * @param {*} req 
  * @param {*} res 
- * @param {*} next 
  */
 
-exports.createSauce = (req, res, next) => {
+exports.createSauce = (req, res) => {
   // on extrait la sauce de la requete via le parse
   
   const sauceObject = JSON.parse(req.body.sauce);
@@ -141,10 +138,9 @@ exports.createSauce = (req, res, next) => {
  * 
  * @param {*} req 
  * @param {*} res 
- * @param {*} next 
  */
 
-exports.modifySauce = (req, res, next) => {
+exports.modifySauce = (req, res) => {
   // l'id de la sauce est l'id inscrit dans l'url
         const sauceObject = req.file ? {
         ...JSON.parse(req.body.sauce),
@@ -279,10 +275,9 @@ exports.modifySauce = (req, res, next) => {
  * 
  * @param {*} req 
  * @param {*} res 
- * @param {*} next 
  */
 
-exports.deletesauce = (req, res, next) => {
+exports.deletesauce = (req, res) => {
     Sauce.findOne({ _id: req.params.id})
     .then((sauce) => {
       //variable du nom de l'image de la sauce trouvée
@@ -335,18 +330,17 @@ exports.deletesauce = (req, res, next) => {
  * 
  * @param {*} req 
  * @param {*} res 
- * @param {*} next 
  */ 
 
-exports.likeSauce = (req, res, next) => {
+exports.likeSauce = (req, res) => {
    Sauce.findOne({ _id: req.params.id })
     //retourne une promesse avec reponse status 200 OK et l'élément en json
     .then((sauce) => {
       // définition de diverse variables
       let valeurVote;
-      let votant = req.body.userId;
-      let like = sauce.usersLiked;
-      let unlike = sauce.usersDisliked;
+      const votant = req.body.userId;
+      const like = sauce.usersLiked;
+      const unlike = sauce.usersDisliked;
       // determine si l'utilisateur est dans un tableau
       let bon = like.includes(votant);
       let mauvais = unlike.includes(votant);
